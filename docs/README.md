@@ -6,6 +6,7 @@ This is a React application demo leveraging the [Agnostic Web Foundation](https:
 
 `This demo is built using Bootstrap 4.`
 
+`This project was NOT bootstrapped with Create React App.`
 
 ### Project Structure
 
@@ -62,6 +63,9 @@ This is a React application demo leveraging the [Agnostic Web Foundation](https:
 - [Unit tests Report](https://web2solutions.github.io/agnostic-web-foundation-react-class-demo/reports/unit-testing/index.html)
 
 - [Agnostic Web Foundation Code documentation](https://web2solutions.github.io/agnostic-web-foundation/code/index.html)
+
+- [Agnostic Web Foundation Project](https://github.com/web2solutions/agnostic-web-foundation)
+
 
 
 
