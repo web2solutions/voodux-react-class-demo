@@ -12,7 +12,7 @@ It uses [Bootstrap4](https://getbootstrap.com/docs/4.0/getting-started/introduct
 
 [Check the online demo](https://agnostic-web-foundation-react-class-demo.vercel.app/)
 
-<img src="https://i.imgur.com/b29Lsgj.png" width="600" />
+<img src="https://i.imgur.com/E1u5g6y.png" width="600" />
 
 ### Agnostic Web Foundation Docs
 
