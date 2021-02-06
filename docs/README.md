@@ -57,8 +57,11 @@ This is a React application demo leveraging the [Agnostic Web Foundation](https:
 
 ## Links
 
-- [Code documentation](https://web2solutions.github.io/agnostic-web-foundation/code/index.html)
-- [Unit tests Report](https://web2solutions.github.io/agnostic-web-foundation/reports/unit-testing/index.html)
+- [Code Documentation of this demo](https://web2solutions.github.io/agnostic-web-foundation-react-class-demo/code/index.html)
+
+- [Unit tests Report](https://web2solutions.github.io/agnostic-web-foundation-react-class-demo/reports/unit-testing/index.html)
+
+- [Agnostic Web Foundation Code documentation](https://web2solutions.github.io/agnostic-web-foundation/code/index.html)
 
 
 
