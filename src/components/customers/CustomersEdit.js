@@ -76,7 +76,7 @@ class CustomersEdit extends React.Component {
     this.#__id = __id
     const findCustomer = await Customer.findById(this.#__id)
     if (findCustomer.error) {
-      console.error('findCustomer.error', findCustomer.error)
+      // console.error('findCustomer.error', findCustomer.error)
       return
     }
     if (findCustomer.data) {
@@ -97,7 +97,7 @@ class CustomersEdit extends React.Component {
     this.#__id = __id
     const findCustomer = await Customer.findById(this.#__id)
     if (findCustomer.error) {
-      console.error('findCustomer.error', findCustomer.error)
+      // console.error('findCustomer.error', findCustomer.error)
       return
     }
     if (findCustomer.data) {

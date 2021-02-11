@@ -25,7 +25,7 @@ class Crud extends React.Component {
         users: []
       }
     } catch (error) {
-      console.error(error)
+      // console.error(error)
     }
     this.handleAddDocument = this.handleAddDocument.bind(this)
     this.handleEditDocument = this.handleEditDocument.bind(this)
@@ -45,14 +45,14 @@ class Crud extends React.Component {
 
     // get Users on database
     const users = await User.find({}, { ...this.pagination })
-    console.warn(users)
+    // console.warn(users)
 
     if (users.data) {
       this.setState({ users: users.data })
     }
 
     const counter = await User.count()
-    console.warn(counter)
+    // console.warn(counter)
     if (counter.data < 1) {
       await User.add({
         name: 'Eduardo Almeida',

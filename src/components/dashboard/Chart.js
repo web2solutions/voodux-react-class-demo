@@ -65,7 +65,7 @@ class Chart extends React.Component {
   }
 
   async handlerChangeOrder (eventObj) {
-    console.error('handlerChangeOrder chart')
+    // console.error('handlerChangeOrder chart')
     const { error } = eventObj
     if (error) {
       return

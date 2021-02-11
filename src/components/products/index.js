@@ -13,17 +13,17 @@ const formatter = new Intl.NumberFormat('en-US', {
 const handlerOnAddDocEventListener = function (eventObj) {
   const { error, /* document, foundation, */ data } = eventObj
   if (error) {
-    console.error(`Error adding user: ${error}`)
+    // console.error(`Error adding user: ${error}`)
     return
   }
-  console.debug([data, ...this.state.products])
+  // console.debug([data, ...this.state.products])
   this.setState({ products: [data, ...this.state.products] })
 }
 
 const handlerOnEditDocEventListener = function (eventObj) {
   const { data, primaryKey, /* document, foundation, */ error } = eventObj
   if (error) {
-    console.error(`Error updating user: ${error}`)
+    // console.error(`Error updating user: ${error}`)
     return
   }
   const newData = this.state.products.map((product) => {
@@ -33,14 +33,14 @@ const handlerOnEditDocEventListener = function (eventObj) {
       return product
     }
   })
-  console.debug([...newData])
+  // console.debug([...newData])
   this.setState({ products: [...newData] })
 }
 
 const handlerOnDeleteDocEventListener = function (eventObj) {
   const { error, /* document, foundation, */ data } = eventObj
   if (error) {
-    console.error(`Error deleting user: ${error}`)
+    // console.error(`Error deleting user: ${error}`)
     return
   }
   const allProducts = [...this.state.products]

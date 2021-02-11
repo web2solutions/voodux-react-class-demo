@@ -126,7 +126,7 @@ export default class DataEntity extends EventSystem {
   /**
    * @memberof DataEntity.entity
    * @member {getter} DataEntity.entity
-   * @example console.log(DataEntity.entity)
+   * @example // console.log(DataEntity.entity)
    * @description Gets the entity name which which DataEntity instance is handling out
    * @return {object} this.#_entity
    */
@@ -137,7 +137,7 @@ export default class DataEntity extends EventSystem {
   /**
    * @memberof DataEntity.schema
    * @member {getter} DataEntity.schema
-   * @example console.log(DataEntity.schema)
+   * @example // console.log(DataEntity.schema)
    * @description Gets the data schema related to this Entity Data API
    * @return {object} this.#_schema
    */
@@ -148,7 +148,7 @@ export default class DataEntity extends EventSystem {
   /**
    * @memberof DataEntity
    * @member {getter} DataEntity.strategy
-   * @example console.log(DataEntity.strategy)
+   * @example // console.log(DataEntity.strategy)
    * @description Gets the data strategy currently being used
    * @return {string} this.#_strategy
    */
@@ -273,12 +273,12 @@ const { data, error } = await Customer.edit(doc.__id, doc)
       }
       rawObj = toJSON(model)
       rawObj.__id = primaryKey
-      console.debug('query', {primaryKey, rawObj})
+      // console.debug('query', {primaryKey, rawObj})
       const response = await this.#_foundation.localDatabaseTransport
         .table(this.#_entity)
         .put({ ...rawObj })
         // .update({ __id: primaryKey }, { ...rawObj })
-      console.debug('response', response)
+      // console.debug('response', response)
       data = { __id: primaryKey, ...rawObj }
       /* if (response.modifiedCount === 1) {
         data = { __id: primaryKey, ...rawObj }
@@ -290,7 +290,7 @@ const { data, error } = await Customer.edit(doc.__id, doc)
         }
       } */
     } catch (e) {
-      console.log(e)
+      // console.log(e)
       error = e
     }
     this.#_triggerEditEvents({ data, error, primaryKey, rawObj })
@@ -420,7 +420,7 @@ const { data, error } = await Customer.edit(doc.__id, doc)
         }
       }
     } catch (e) {
-      console.error('error', error)
+      // console.error('error', error)
       error = e
     }
     return createMethodSignature(error, data)

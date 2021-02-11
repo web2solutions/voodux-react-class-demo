@@ -76,7 +76,7 @@ class ProductsEdit extends React.Component {
     this.#__id = __id
     const findProduct = await Product.findById(this.#__id)
     if (findProduct.error) {
-      console.error('findProduct.error', findProduct.error)
+      // console.error('findProduct.error', findProduct.error)
       return
     }
     if (findProduct.data) {
@@ -97,7 +97,7 @@ class ProductsEdit extends React.Component {
     this.#__id = __id
     const findProduct = await Product.findById(this.#__id)
     if (findProduct.error) {
-      console.error('findProduct.error', findProduct.error)
+      // console.error('findProduct.error', findProduct.error)
       return
     }
     if (findProduct.data) {

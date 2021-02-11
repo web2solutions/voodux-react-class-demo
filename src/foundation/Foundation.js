@@ -4,29 +4,7 @@ import DataEntity from './DataEntity'
 import LocalDatabaseTransport from './LocalDatabaseTransport'
 import EventSystem from './EventSystem'
 
-
-
-const _workerOnMessage = function (event) {
-  // console.error('_workerOnMessage')
-  const {
-    cmd /* , message */
-  } = event.data
-  switch (cmd) {
-    case 'responseClientId':
-      this.triggerEvent('worker:responseClientId', {
-        foundation: this,
-        worker: this.applicationWorker,
-        ...event.data
-      })
-      break
-    default:
-      console.log(`Sorry, we are out of ${cmd}.`)
-  }
-}
-
-
-
-
+// import workerOnMessage from './events/workerOnMessage'
 
 /**
  * @author Eduardo Perotta de Almeida <web2solucoes@gmail.com>
@@ -146,7 +124,7 @@ const foundation = new Foundation({
     }
 })
 
-foundation.on('foundation:start', function(eventObj) {
+foundation.on('foundation:start', async function(eventObj) {
     const {
         foundation,
         error
@@ -162,14 +140,14 @@ foundation.on('foundation:start', function(eventObj) {
         name: 'Eduardo Almeida',
         username: 'web2'
     })
-    console.debug('Eduardo', Eduardo)
+    // console.debug('Eduardo', Eduardo)
 
     const Volvo = await Product.add({
         name: 'Volvo XC90',
         vendor: 'Volvo',
         price_cost: 150000
     })
-    console.debug('Volvo', Volvo)
+    // console.debug('Volvo', Volvo)
 })
 
 // start foundation and get it ready to be used
@@ -220,7 +198,7 @@ export default class Foundation extends EventSystem {
   /**
    * @member {getter} Foundation.dataStrategy
    * @Description Get the data strategy being used.<br> Possible values are: offlineFirst, onlineFirst, offline, online. <br> Default: offlineFirst
-   * @example console.log(Foundation.dataStrategy)
+   * @example // console.log(Foundation.dataStrategy)
    * @return {string} this.#_dataStrategy
    */
   get dataStrategy () {
@@ -230,7 +208,7 @@ export default class Foundation extends EventSystem {
   /**
    * @member {getter} Foundation.guid
    * @description Get the Foundation Session guid currently being used.
-   * @example console.log(Foundation.guid)
+   * @example // console.log(Foundation.guid)
    */
   get guid () {
     return this.#_guid
@@ -245,7 +223,7 @@ export default class Foundation extends EventSystem {
         name: 'Eduardo Almeida',
         username: 'web2'
       })
-      console.debug(Eduardo)
+      // console.debug(Eduardo)
       // {  
       //    data: {__id: 1, _id: "600e0ae8d9d7f50000e1444b", name: "Eduardo Almeida", username: "web2", id: "600e0ae8d9d7f50000e1444b"}
       //    error: null
@@ -259,7 +237,7 @@ export default class Foundation extends EventSystem {
    * @member {getter} Foundation.tabId
    * @description Get the Browser tab ID
    * @example 
-      console.log(foundation.tabId)
+      // console.log(foundation.tabId)
    */
   get tabId() {
     return this.#_tabId
@@ -269,7 +247,7 @@ export default class Foundation extends EventSystem {
    * @member {getter} Foundation.name
    * @name Foundation.name
    * @description Get the Foundation name
-   * @example console.log(Foundation.name)
+   * @example // console.log(Foundation.name)
    */
   get name () {
     return this.#_name
@@ -289,7 +267,7 @@ export default class Foundation extends EventSystem {
   /**
    * @member {getter} Foundation.started
    * @description Get the start state
-   * @example console.log(Foundation.started)
+   * @example // console.log(Foundation.started)
    */
   get started () {
     return this.#_started
@@ -308,13 +286,9 @@ export default class Foundation extends EventSystem {
   #setModel(entity = '', dataEntity = {}) {
     let _error = null
     let _data = null
-    try {
-      this.#_models[entity] =  dataEntity
-      _data = this.#_models[entity]
-    } catch (error) {
-      console.error('EROROR', error)
-      _error = error
-    }
+    this.#_models[entity] = dataEntity
+    _data = this.#_models[entity]
+
     return createMethodSignature(_error, _data)
   }
   
@@ -349,7 +323,7 @@ export default class Foundation extends EventSystem {
       }
       _data = this.#_models
     } catch (error) {
-      console.error(error)
+      // console.error(error)
       _error = error
     }
     return createMethodSignature(_error, _data)
@@ -371,18 +345,8 @@ export default class Foundation extends EventSystem {
    * @return Foundation GUID saved on localStorage
    */
   setGuidStorage (guid) {
-    localStorage.setItem('guid', guid)
-    return localStorage.getItem('guid')
-  }
-
-  /**
-   * @Method Foundation.getGuidStorage
-   * @description get Foundation GUID saved on localStorage
-   * @example foundation.getGuidStorage()
-   * @return Foundation GUID saved on localStorage
-   */
-  getGuidStorage () {
-    return localStorage.getItem('guid') || false
+    window.localStorage.setItem('guid', guid)
+    return window.localStorage.getItem('guid')
   }
 
   /**
@@ -391,13 +355,13 @@ export default class Foundation extends EventSystem {
    * @return Foundation GUID saved on localStorage
    */
   setupAppGuid () {
-    const guidCache = this.getGuidStorage() || false
+    const guidCache = window.localStorage.getItem('guid') || false
     if (guidCache) {
       this.#_guid = guidCache
     } else {
       this.setGuidStorage(this.#_guid)
     }
-    return this.getGuidStorage()
+    return window.localStorage.getItem('guid')
   }
   
   /**
@@ -408,7 +372,7 @@ export default class Foundation extends EventSystem {
    * @return  {string|object} signature.error - Execution error
    * @return  {object} signature.data - Worker Registration Object
    */
-  #registerApplicationWorker (workerFile = 'ServiceWorker.js') {
+  /* #registerApplicationWorker (workerFile = 'ServiceWorker.js') {
     const self = this
     return new Promise((resolve, reject) => {
       if ('serviceWorker' in navigator) {
@@ -418,7 +382,7 @@ export default class Foundation extends EventSystem {
           })
           .then(function (reg) {
             // registration worked
-            navigator.serviceWorker.addEventListener('message', _workerOnMessage.bind(self))
+            navigator.serviceWorker.addEventListener('message', workerOnMessage.bind(self))
             if (reg.installing) {
               self.#_workers['foundation'] = reg.installing
               self.#_workers['foundation'].postMessage({ cmd: 'getClientId', message: null })
@@ -434,7 +398,7 @@ export default class Foundation extends EventSystem {
           })
       }
     })
-  }
+  } */
 
   /**
    * @async
@@ -446,7 +410,7 @@ export default class Foundation extends EventSystem {
    * @return  {string|object} signature.error - Execution error
    * @return  {object} signature.data - Worker Registration Object
    */
-  #registerWorker (name = '', workerFile = 'ServiceWorker.js') {
+  /* #registerWorker (name = '', workerFile = 'ServiceWorker.js') {
     const self = this
     return new Promise((resolve, reject) => {
       if ('serviceWorker' in navigator) {
@@ -456,7 +420,7 @@ export default class Foundation extends EventSystem {
           })
           .then(function (reg) {
             // registration worked
-            navigator.serviceWorker.addEventListener('message', _workerOnMessage.bind(self))
+            navigator.serviceWorker.addEventListener('message', workerOnMessage.bind(self))
             if (reg.installing) {
               self.#_workers[name] = reg.installing
               self.#_workers[name].postMessage({ cmd: 'getClientId', message: null })
@@ -472,7 +436,7 @@ export default class Foundation extends EventSystem {
           })
       }
     })
-  }
+  } */
 
   /**
    * @Private
@@ -497,7 +461,7 @@ export default class Foundation extends EventSystem {
         }
       }
     } catch (error) {
-      console.error(error)
+      // console.error(error)
       _error = error
     }
 
@@ -523,9 +487,9 @@ export default class Foundation extends EventSystem {
     try {
       const vitals = await this.#startVitals()
 
-      if (this.useWorker) {
-        await this.#registerApplicationWorker()
-      }
+      // if (this.useWorker) {
+        // await this.#registerApplicationWorker()
+      // }
 
       this.#_started = true
       
@@ -536,7 +500,7 @@ export default class Foundation extends EventSystem {
 
       }
     } catch (error) {
-      console.error(error)
+      // console.error(error)
       _error = error
     }
 
