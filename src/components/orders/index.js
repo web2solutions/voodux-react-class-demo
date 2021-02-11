@@ -11,21 +11,21 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 const handlerOnAddDocEventListener = function (eventObj) {
-  console.error('handlerOnAddDocEventListener order index.js')
+  // console.error('handlerOnAddDocEventListener order index.js')
   const { error, /* document, foundation, */ data } = eventObj
   if (error) {
-    console.error(`Error adding user: ${error}`)
+    // console.error(`Error adding user: ${error}`)
     return
   }
-  console.debug([data, ...this.state.orders])
+  // console.debug([data, ...this.state.orders])
   this.setState({ orders: [data, ...this.state.orders] })
 }
 
 const handlerOnEditDocEventListener = function (eventObj) {
-  console.error('handlerOnEditDocEventListener order index.js')
+  // console.error('handlerOnEditDocEventListener order index.js')
   const { data, primaryKey, /* document, foundation, */ error } = eventObj
   if (error) {
-    console.error(`Error updating user: ${error}`)
+    // console.error(`Error updating user: ${error}`)
     return
   }
   const newData = this.state.orders.map((order) => {
@@ -35,15 +35,15 @@ const handlerOnEditDocEventListener = function (eventObj) {
       return order
     }
   })
-  console.debug([...newData])
+  // console.debug([...newData])
   this.setState({ orders: [...newData] })
 }
 
 const handlerOnDeleteDocEventListener = function (eventObj) {
-  console.error('handlerOnDeleteDocEventListener order index.js')
+  // console.error('handlerOnDeleteDocEventListener order index.js')
   const { error, /* document, foundation, */ data } = eventObj
   if (error) {
-    console.error(`Error deleting user: ${error}`)
+    // console.error(`Error deleting user: ${error}`)
     return
   }
   const allOrders = [...this.state.orders]
@@ -171,7 +171,7 @@ componentDidMount() {
 
     // get Orders on database
     const orders = await Order.find({}, { ...this.pagination })
-    console.warn(orders)
+    // console.warn(orders)
 
     if (orders.data) {
       this.setState({ orders: orders.data })

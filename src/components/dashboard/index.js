@@ -9,6 +9,53 @@ const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2
 })
 
+const handlerOnAddDocEventListener = function (eventObj) {
+  // console.error('handlerOnAddDocEventListener teyyyyy order index.js')
+  const { error, /* document, foundation, */ data } = eventObj
+  if (error) {
+    // console.error(`Error adding user: ${error}`)
+    return
+  }
+  // console.debug([data, ...this.state.orders])
+  this.setState({ orders: [data, ...this.state.orders] })
+}
+
+const handlerOnEditDocEventListener = function (eventObj) {
+  // console.error('handlerOnEditDocEventListener order index.js')
+  const { data, primaryKey, /* document, foundation, */ error } = eventObj
+  if (error) {
+    // console.error(`Error updating user: ${error}`)
+    return
+  }
+  const newData = this.state.orders.map((order) => {
+    if (order.__id === primaryKey) {
+      return data
+    } else {
+      return order
+    }
+  })
+  // console.debug([...newData])
+  this.setState({ orders: [...newData] })
+}
+
+const handlerOnDeleteDocEventListener = function (eventObj) {
+  // console.error('handlerOnDeleteDocEventListener order index.js')
+  const { error, /* document, foundation, */ data } = eventObj
+  if (error) {
+    // console.error(`Error deleting user: ${error}`)
+    return
+  }
+  const allOrders = [...this.state.orders]
+  for (let x = 0; x < allOrders.length; x++) {
+    const order = allOrders[x]
+    if (order.__id === data.__id) {
+      allOrders.splice(x)
+    }
+  }
+  this.setState({ orders: allOrders })
+}
+
+
 class Dashboard extends React.Component {
   constructor (props) {
     super(props)
@@ -36,57 +83,30 @@ class Dashboard extends React.Component {
     this.onDeleteDocEventListener = null
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
+    // console.debug('Dashboard mounted')
     const { Order } = this.foundation.data
-    this.onAddDocEventListener = this.foundation.on(`collection:add:${this.entity.toLowerCase()}`, function (eventObj) {
-      console.error('onAddDocEventListener dashboard')
-      const { error, /* document, foundation, */ data } = eventObj
-      if (error) {
-        console.error(`Error adding user: ${error}`)
-        return
-      }
-      this.setState({ orders: [data, ...this.state.orders] })
-    })
+    
+    // listen to add, edit and delete events on Order collection
+    // and react to it
+    /**
+     * listen to add Order Data Entity change event on Data API
+     */
+    this.onAddDocEventListener = Order.on('add', handlerOnAddDocEventListener.bind(this))
 
-    // listen to update Order Collection event on Data API
-    this.onEditDocEventListener = this.foundation.on(`collection:edit:${this.entity.toLowerCase()}`, function (eventObj) {
-      console.error('onEditDocEventListener dashboard')
-      const { data, primaryKey, /* document, foundation, */ error } = eventObj
-      if (error) {
-        console.error(`Error updating user: ${error}`)
-        return
-      }
-      const newData = this.state.orders.map(order => {
-        if (order.__id === primaryKey) {
-          return data
-        } else {
-          return order
-        }
-      })
-      this.setState({ orders: [...newData] })
-    })
+    /**
+     * listen to edit Order Data Entity change event on Data API
+     */
+    this.onEditDocEventListener = Order.on('edit', handlerOnEditDocEventListener.bind(this))
 
-    // listen to delete Order Collection event on Data API
-    this.onDeleteDocEventListener = this.foundation.on(`collection:delete:${this.entity.toLowerCase()}`, function (eventObj) {
-      console.error('onDeleteDocEventListener dashboard')
-      const { error, /* document, foundation, */ data } = eventObj
-      if (error) {
-        console.error(`Error deleting user: ${error}`)
-        return
-      }
-      const allOrders = [...this.state.orders]
-      for (let x = 0; x < allOrders.length; x++) {
-        const order = allOrders[x]
-        if (order.__id === data.__id) {
-          allOrders.splice(x)
-        }
-      }
-      this.setState({ orders: allOrders })
-    })
+    /**
+     * listen to delete Order Data Entity change event on Data API
+     */
+    this.onDeleteDocEventListener = Order.on('delete', handlerOnDeleteDocEventListener.bind(this))
 
     // get Users on database
     const orders = await Order.find({}, { ...this.pagination })
-    console.warn(orders)
+    // console.warn(orders)
 
     if (orders.data) {
       this.setState({ orders: orders.data })
