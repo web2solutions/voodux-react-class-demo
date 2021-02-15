@@ -24,7 +24,7 @@ It uses [Bootstrap4](https://getbootstrap.com/docs/4.0/getting-started/introduct
 
 [Project](https://github.com/web2solutions/voodux)
 
-[Code Documentation](https://web2solutions.github.io/voodux/)
+[Code Documentation](https://web2solutions.github.io/voodux/code/index.html)
 
 ### Code automation tools
 
