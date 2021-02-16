@@ -73,7 +73,8 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "recharts": "^2.0.4",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "voodux": "0.0.9"
   },
   "description": "React application (Class based components) demo leveraging the [voodux](https://github.com/web2solutions/voodux) as it underlying architecture to handle it data."
 }

@@ -26,7 +26,6 @@ const customerObj = {
  * @extends React.Component
  */
 class CustomersEdit extends React.Component {
-  #__id
   constructor (props) {
     super(props)
     /**
@@ -54,7 +53,7 @@ class CustomersEdit extends React.Component {
       cards: ['VISA ⠀*** 3719'],
       toDashboard: false
     }
-    this.#__id = null
+    this._id = null
     this.form = null
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
     this.handleChangeFieldValue = this.handleChangeFieldValue.bind(this)
@@ -73,8 +72,8 @@ class CustomersEdit extends React.Component {
     const { match: { params } } = this.props
     const { Customer } = this.foundation.data
     const { __id } = params
-    this.#__id = __id
-    const findCustomer = await Customer.findById(this.#__id)
+    this._id = __id
+    const findCustomer = await Customer.findById(this._id)
     if (findCustomer.error) {
       // console.error('findCustomer.error', findCustomer.error)
       return
@@ -94,8 +93,8 @@ class CustomersEdit extends React.Component {
     const { match: { params } } = this.props
     const { Customer } = this.foundation.data
     const { __id } = params
-    this.#__id = __id
-    const findCustomer = await Customer.findById(this.#__id)
+    this._id = __id
+    const findCustomer = await Customer.findById(this._id)
     if (findCustomer.error) {
       // console.error('findCustomer.error', findCustomer.error)
       return
@@ -155,7 +154,7 @@ async handleFormSubmit(e) {
   e.stopPropagation()
   this.form.classList.add('was-validated')
   const doc = { ...this.state.customer }
-  const { data, error } = await Customer.edit(this.#__id, doc)
+  const { data, error } = await Customer.edit(this._id, doc)
   if (error) {
     swal('Database error', error.message, 'error')
     return
@@ -172,7 +171,7 @@ async handleFormSubmit(e) {
     }
     this.form.classList.add('was-validated')
     const doc = { ...this.state.customer }
-    const { data, error } = await Customer.edit(this.#__id, doc)
+    const { data, error } = await Customer.edit(this._id, doc)
     if (error) {
       swal('Database error', error.message, 'error')
       return
