@@ -74,10 +74,12 @@ class Dashboard extends React.Component {
     this.onDeleteDocEventListener = null
   }
 
-  componentWillUnmount () {
-    this.foundation.stopListenTo(this.onAddDocEventListener)
-    this.foundation.stopListenTo(this.onEditDocEventListener)
-    this.foundation.stopListenTo(this.onDeleteDocEventListener)
+  componentWillUnmount() {
+    const { Order } = this.foundation.data
+
+    Order.stopListenTo(this.onAddDocEventListener)
+    Order.stopListenTo(this.onEditDocEventListener)
+    Order.stopListenTo(this.onDeleteDocEventListener)
     this.onAddDocEventListener = null
     this.onEditDocEventListener = null
     this.onDeleteDocEventListener = null
