@@ -1,7 +1,7 @@
 [<img src="https://i.imgur.com/a856gth.png" width="400" />](https://web2solutions.github.io/voodux/code/index.html)
 
 
-# <img src="https://avatars3.githubusercontent.com/u/14809007?s=280&v=4" width="50" /> voodux - React Demo
+# voodux - React Demo
 
 React application (Class based components) demo leveraging the [voodux](https://github.com/web2solutions/voodux) as it underlying architecture to handle it data.
 
